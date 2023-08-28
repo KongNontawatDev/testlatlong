@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Get Latitude and Longitude</title>
+</head>
+<body>
+  <h1>Latitude and Longitude</h1>
+  <p>Click the button to get your current latitude and longitude:</p>
+  <button id="getLocationButton">Get Location</button>
+  <p><strong>Latitude:</strong> <span id="latitude"></span></p>
+  <p><strong>Longitude:</strong> <span id="longitude"></span></p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const getLocationButton = document.getElementById("getLocationButton");
+      const latitudeElement = document.getElementById("latitude");
+      const longitudeElement = document.getElementById("longitude");
+
+      getLocationButton.addEventListener("click", () => {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              latitudeElement.textContent = latitude;
+              longitudeElement.textContent = longitude;
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+            },
+            {
+              enableHighAccuracy: true,
+            }
+          );
+        } else {
+          console.error("Geolocation is not available.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
